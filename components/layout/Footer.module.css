@@ -98,12 +98,10 @@
   margin-bottom: 18px;
 }
 
-/* logo: brighten on the dark footer so the dark text reads well */
 .logo {
-  height: 56px;
+  height: 88px;
   width: auto;
   object-fit: contain;
-  filter: brightness(0) invert(1);
   opacity: 0.92;
 }
 

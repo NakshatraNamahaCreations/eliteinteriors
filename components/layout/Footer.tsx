@@ -33,10 +33,10 @@ export default function Footer() {
             <div className={styles.brandCol}>
               <Link href="/" className={styles.brand}>
                 <Image
-                  src="/logo.png"
+                  src="/logo-dark.png"
                   alt="Elite Interiors"
-                  width={987}
-                  height={630}
+                  width={299}
+                  height={296}
                   className={styles.logo}
                 />
               </Link>

@@ -111,10 +111,10 @@ export default function HeroSlider() {
         <div className={styles.sidebar}>
           <Link href="/" className={styles.sidebarLogo} aria-label="Elite Interiors, home">
             <Image
-              src="/logo.png"
+              src="/logo-dark.png"
               alt="Elite Interiors"
-              width={987}
-              height={630}
+              width={299}
+              height={296}
               priority
             />
           </Link>

@@ -13,8 +13,8 @@
   overflow: hidden;
   background: #15120f;
   isolation: isolate;
-  /* pull up under the transparent sticky navbar (78px tall) for the overlay look */
-  margin-top: -78px;
+  /* pull up under the transparent sticky navbar (92px tall) for the overlay look */
+  margin-top: -92px;
 }
 
 /* ---- background stage + cross-fading slides ---- */
