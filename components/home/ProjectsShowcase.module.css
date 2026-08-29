@@ -1,0 +1,296 @@
+/* ===================== PROJECTS (scroll-driven pinned) ===================== */
+/* tall section gives scroll room; inner stage is pinned (sticky) */
+.section {
+  position: relative;
+  height: 400vh; /* 4 slides → 1 viewport of scroll each */
+  /* full-bleed */
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+}
+
+.sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+/* ---- right large image (cross-fades) ---- */
+.rightImage {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 50%;
+  z-index: 0;
+}
+
+.bgSlide {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transform: scale(1.05);
+  transition: opacity 0.8s ease, transform 1.2s ease;
+}
+
+.bgActive {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ---- left light panel ---- */
+.leftPanel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 56%;
+  z-index: 1;
+  background: linear-gradient(
+    100deg,
+    var(--bg) 0%,
+    var(--bg) 78%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+
+/* ---- foreground ---- */
+.inner {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* left copy — constrained so it never runs under the center card */
+.copy {
+  max-width: min(40%, 420px);
+}
+
+.eyebrow {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  color: var(--ink-soft);
+}
+
+.title {
+  margin: 20px 0 32px;
+  color: var(--ink);
+  font-size: clamp(2.2rem, 4.2vw, 3.4rem);
+  line-height: 1.05;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+}
+
+.titleScript {
+  display: block;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 500;
+  color: var(--accent-deep); /* warm accent reads on white */
+}
+
+.actions {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.btnPrimary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #fff;
+  background: var(--ink);
+  padding: 13px 26px;
+  border-radius: 8px;
+  transition: transform 0.25s ease, background 0.25s ease, color 0.25s ease;
+}
+
+.btnPrimary:hover {
+  transform: translateY(-2px);
+  background: var(--accent-deep);
+}
+
+.btnGhost {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--ink);
+  border: 1px solid var(--line);
+  padding: 13px 26px;
+  border-radius: 8px;
+  transition: background 0.25s ease, border-color 0.25s ease;
+}
+
+.btnGhost:hover {
+  background: var(--bg-alt);
+  border-color: var(--accent);
+}
+
+/* ---- center floating card ---- */
+.card {
+  position: absolute;
+  left: 44%;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3;
+  width: clamp(260px, 26vw, 320px);
+  background: rgba(36, 32, 28, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 40px 80px -30px rgba(0, 0, 0, 0.7);
+}
+
+.cardImgWrap {
+  position: relative;
+  height: clamp(150px, 16vw, 200px);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.cardImg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transform: scale(1.06);
+  transition: opacity 0.6s ease, transform 0.9s ease;
+}
+
+.cardActive {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.cardBody {
+  padding: 18px 8px 6px;
+}
+
+.cardTitle {
+  color: #fff;
+  font-size: 1.15rem;
+  margin-bottom: 8px;
+}
+
+.cardDesc {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.cardArrow {
+  position: absolute;
+  left: 50%;
+  bottom: -22px;
+  transform: translateX(-50%);
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: none;
+  background: #fff;
+  color: var(--ink);
+  cursor: pointer;
+  box-shadow: var(--shadow-md);
+  transition: background 0.25s ease, color 0.25s ease, transform 0.25s ease;
+}
+
+.cardArrow:hover {
+  background: var(--accent);
+  color: #fff;
+  transform: translateX(-50%) translateY(-2px);
+}
+
+/* progress dots (left of the card) */
+.dots {
+  position: absolute;
+  left: 40%;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(28, 26, 23, 0.25);
+  transition: background 0.3s ease, height 0.3s ease;
+}
+
+.dotActive {
+  background: var(--accent);
+  height: 18px;
+  border-radius: 999px;
+}
+
+.scrollHint {
+  position: absolute;
+  left: 0;
+  bottom: 28px;
+  font-size: 0.74rem;
+  letter-spacing: 0.18em;
+  color: var(--ink-soft);
+}
+
+/* ===================== RESPONSIVE ===================== */
+@media (max-width: 900px) {
+  .section {
+    height: auto;
+  }
+  .sticky {
+    position: relative;
+    height: auto;
+    padding: 70px 0;
+  }
+  .rightImage {
+    position: relative;
+    width: 100%;
+    height: 280px;
+    margin-top: 28px;
+  }
+  .leftPanel {
+    display: none;
+  }
+  .inner {
+    flex-direction: column;
+    gap: 24px;
+  }
+  .card {
+    position: relative;
+    left: auto;
+    top: auto;
+    transform: none;
+    width: 100%;
+    margin-top: 28px;
+  }
+  .cardArrow {
+    bottom: 14px;
+    right: 14px;
+    left: auto;
+    transform: none;
+  }
+  .dots,
+  .scrollHint {
+    display: none;
+  }
+}

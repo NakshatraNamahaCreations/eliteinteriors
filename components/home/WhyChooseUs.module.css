@@ -1,0 +1,294 @@
+/* ===================== WHY CHOOSE US =====================
+   Static replacement for the old scroll-driven parallax section. The only
+   motion is the site-wide .reveal fade and small hover states — nothing is
+   tied to scroll position. */
+.section {
+  position: relative;
+  background: var(--bg-alt);
+  overflow: hidden;
+}
+
+/* soft brass wash in the corner, purely decorative */
+.section::before {
+  content: "";
+  position: absolute;
+  top: -140px;
+  right: -140px;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(176, 141, 87, 0.16) 0%,
+    rgba(176, 141, 87, 0) 70%
+  );
+  pointer-events: none;
+}
+
+.inner {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  gap: clamp(36px, 5vw, 72px);
+  align-items: center;
+}
+
+/* ---------- left: image composition ---------- */
+.media {
+  position: relative;
+  padding-bottom: 54px; /* room for the inset image to hang below */
+  padding-left: 26px; /* room for the offset frame */
+}
+
+.mediaMain {
+  position: relative;
+  z-index: 1;
+  /* the artwork is square — a 1/1 window shows the torn edges whole instead of
+     cropping them away, which a portrait window would do. */
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  border-radius: var(--radius);
+  background-size: cover;
+  background-position: center;
+  box-shadow: var(--shadow-lg);
+}
+
+/* thin brass outline offset behind the main image */
+.mediaFrame {
+  position: absolute;
+  z-index: 0;
+  left: 0;
+  top: 28px;
+  width: calc(100% - 26px);
+  height: calc(100% - 82px);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius);
+  transform: translateX(-26px);
+  pointer-events: none;
+}
+
+/* smaller image overlapping the bottom-right corner */
+.mediaInset {
+  position: absolute;
+  z-index: 2;
+  right: -14px;
+  bottom: 0;
+  width: 46%;
+  aspect-ratio: 1 / 1;
+  border-radius: var(--radius);
+  border: 6px solid var(--bg-alt);
+  background-size: cover;
+  background-position: center;
+  box-shadow: var(--shadow-md);
+}
+
+/* "10+ years" chip on the top-left of the photo */
+.badge {
+  position: absolute;
+  z-index: 3;
+  top: 22px;
+  left: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 20px;
+  border-radius: var(--radius-sm);
+  background: var(--dark);
+  color: #fff;
+  box-shadow: var(--shadow-md);
+}
+
+.badgeNum {
+  font-size: 1.7rem;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--accent);
+}
+
+.badgeLabel {
+  font-size: 0.72rem;
+  line-height: 1.35;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+/* ---------- right: copy ---------- */
+.eyebrow {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  color: var(--accent-deep);
+  margin-bottom: 14px;
+}
+
+.title {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: clamp(1.9rem, 3.2vw, 2.8rem);
+  line-height: 1.18;
+  color: var(--ink);
+  margin: 0 0 18px;
+}
+
+.gold {
+  color: var(--accent);
+}
+
+.lead {
+  font-size: 1rem;
+  line-height: 1.75;
+  color: var(--ink-soft);
+  margin: 0 0 30px;
+  max-width: 60ch;
+}
+
+/* ---------- four points ---------- */
+.points {
+  list-style: none;
+  margin: 0 0 32px;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px 26px;
+}
+
+.point {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.pointIcon {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  color: var(--accent);
+  transition: background 0.25s ease, color 0.25s ease,
+    border-color 0.25s ease, transform 0.25s ease;
+}
+
+.point:hover .pointIcon {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.pointTitle {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin: 2px 0 5px;
+}
+
+.pointText {
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  margin: 0;
+}
+
+/* ---------- buttons ---------- */
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 30px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: background 0.25s ease, transform 0.25s ease;
+}
+
+.btn:hover {
+  background: var(--accent-deep);
+  transform: translateY(-2px);
+}
+
+.btnIcon {
+  display: grid;
+  place-items: center;
+}
+
+.btnGhost {
+  display: inline-flex;
+  align-items: center;
+  padding: 14px 30px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: border-color 0.25s ease, color 0.25s ease, transform 0.25s ease;
+}
+
+.btnGhost:hover {
+  border-color: var(--accent);
+  color: var(--accent-deep);
+  transform: translateY(-2px);
+}
+
+/* ===================== RESPONSIVE ===================== */
+@media (max-width: 900px) {
+  .inner {
+    grid-template-columns: 1fr;
+    gap: 44px;
+  }
+  .media {
+    max-width: 460px;
+  }
+}
+
+@media (max-width: 560px) {
+  .points {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .media {
+    padding-left: 0;
+    padding-bottom: 40px;
+  }
+  .mediaFrame {
+    display: none;
+  }
+  .mediaInset {
+    width: 42%;
+    right: -8px;
+  }
+  .badge {
+    padding: 11px 15px;
+  }
+  .badgeNum {
+    font-size: 1.4rem;
+  }
+  .actions .btn,
+  .actions .btnGhost {
+    flex: 1 1 auto;
+    justify-content: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .point:hover .pointIcon,
+  .btn:hover,
+  .btnGhost:hover {
+    transform: none;
+  }
+}

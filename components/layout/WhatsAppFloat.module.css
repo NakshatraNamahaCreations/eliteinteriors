@@ -1,0 +1,27 @@
+/* floating WhatsApp button — fixed just ABOVE the back-to-top arrow */
+.btn {
+  position: fixed;
+  right: clamp(18px, 3vw, 32px);
+  bottom: calc(clamp(18px, 3vw, 32px) + 60px); /* back-to-top (48px) + gap */
+  z-index: 60;
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #25d366; /* WhatsApp green */
+  color: #fff;
+  box-shadow: 0 12px 28px -10px rgba(37, 211, 102, 0.65);
+  transition: transform 0.25s ease, background 0.25s ease;
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+  background: #1ebe5b;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn {
+    transition: none;
+  }
+}

@@ -1,0 +1,226 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  transition: background 0.3s ease, box-shadow 0.3s ease,
+    backdrop-filter 0.3s ease;
+}
+
+.scrolled {
+  background: rgba(15, 13, 11, 0.92);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+/* dark scrolled state — light links + brightened logo */
+.scrolled .link {
+  color: rgba(255, 255, 255, 0.85);
+}
+.scrolled .link:hover {
+  color: #fff;
+}
+.scrolled .burger {
+  border-color: rgba(255, 255, 255, 0.35);
+}
+.scrolled .burger span {
+  background: #fff;
+}
+.scrolled .logo {
+  filter: brightness(0) invert(1);
+}
+
+/* ---- white-over-hero variant (homepage, at top) ---- */
+.overHero .link {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.overHero .link:hover {
+  color: #fff;
+}
+
+.overHero .burger {
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.overHero .burger span {
+  background: #fff;
+}
+
+.inner {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  height: 78px;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* hidden while the hero banner's own logo is showing (homepage, at top) */
+.brandHidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* on phones the banner's dark column + logo are hidden, so keep the navbar
+   logo visible even over the hero */
+@media (max-width: 560px) {
+  .brandHidden {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+  /* smaller logo + shorter bar on phones so it doesn't crowd the menu button */
+  .logo {
+    height: 40px;
+  }
+  .inner {
+    height: 64px;
+  }
+  /* align the dropdown to the shorter bar */
+  .nav {
+    inset: 64px 0 auto 0;
+  }
+}
+
+/* logo image — auto width, fixed height; transparent PNG */
+.logo {
+  height: 52px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+}
+
+/* ---- inline nav links (desktop) — centered ---- */
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* center the links in the middle column */
+  gap: 38px;
+}
+
+.link {
+  font-size: 1.08rem;
+  font-weight: 500;
+  color: var(--ink-soft);
+  position: relative;
+  transition: color 0.2s ease;
+}
+
+.link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  height: 2px;
+  width: 0;
+  background: var(--accent);
+  transition: width 0.25s ease;
+}
+
+.link:hover {
+  color: var(--ink);
+}
+
+.link:hover::after {
+  width: 100%;
+}
+
+.cta {
+  padding: 11px 24px;
+  font-size: 0.95rem;
+}
+
+/* desktop CTA on the right; mobile CTA lives inside the dropdown */
+.ctaDesktop {
+  justify-self: end;
+}
+.ctaMobile {
+  display: none;
+}
+
+/* ---- hamburger (mobile only) ---- */
+.burger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 44px;
+  height: 44px;
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.burger span {
+  display: block;
+  height: 2px;
+  width: 20px;
+  margin: 0 auto;
+  background: var(--ink);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.barTop {
+  transform: translateY(7px) rotate(45deg);
+}
+.barMid {
+  opacity: 0;
+}
+.barBot {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* ---- mobile: burger + dropdown menu ---- */
+@media (max-width: 860px) {
+  .burger {
+    display: flex;
+  }
+
+  .nav {
+    position: fixed;
+    inset: 78px 0 auto 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 4px;
+    padding: 18px 24px 28px;
+    background: var(--bg);
+    border-bottom: 1px solid var(--line);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-12px);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+
+  .navOpen {
+    transform: none;
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .link {
+    padding: 12px 4px;
+    border-bottom: 1px solid var(--line);
+    font-size: 1rem;
+  }
+
+  .link::after {
+    display: none;
+  }
+
+  /* hide the desktop CTA, show the one inside the dropdown */
+  .ctaDesktop {
+    display: none;
+  }
+  .ctaMobile {
+    display: inline-flex;
+    margin-top: 14px;
+    justify-content: center;
+  }
+}

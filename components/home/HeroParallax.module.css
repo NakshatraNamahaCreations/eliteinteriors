@@ -1,0 +1,269 @@
+/* ===================== HERO PARALLAX (opens to full-width banner) ===================== */
+.section {
+  position: relative;
+  height: 320vh; /* generous scroll room for a smooth, continuous open */
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  background: var(--bg);
+}
+
+.sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  /* clean vertical stack: heading (top) → torn image (below) — no overlap */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 110px 0 48px;
+}
+
+/* pencil-sketch blueprint background */
+.blueprint {
+  position: absolute;
+  inset: -12% 0 -12% 0;
+  width: 100%;
+  height: 124%;
+  z-index: 0;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+/* intro heading — in flow ABOVE the image (never overlapped), fades on open */
+.heading {
+  position: relative;
+  z-index: 3;
+  margin: 0 0 clamp(16px, 3vh, 30px);
+  text-align: center;
+  color: var(--ink);
+  font-weight: 600;
+  font-size: clamp(1.9rem, 4.6vw, 3.8rem);
+  line-height: 1.08;
+  letter-spacing: -1px;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+/* falling-letter animation */
+.fallWord {
+  display: inline-block;
+  white-space: nowrap;
+}
+.fall {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(-0.6em);
+  animation: fallIn 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes fallIn {
+  0% { opacity: 0; transform: translateY(-0.6em); }
+  60% { opacity: 1; transform: translateY(0.06em); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* full-bleed clean banner (fills the whole hero, fades in as the mask opens) */
+.fullBanner {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  overflow: hidden;
+  will-change: opacity;
+}
+
+.img {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  will-change: transform;
+}
+
+/* torn-mask transparent image, below the heading, scales up + fades out */
+.tornImg {
+  position: relative;
+  z-index: 3;
+  width: min(44vw, 500px);
+  aspect-ratio: 1 / 1;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: drop-shadow(0 26px 50px rgba(28, 26, 23, 0.3));
+  will-change: transform, opacity;
+}
+
+/* dark scrim for legibility once expanded (darker on the left, where the text sits) */
+.scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    rgba(20, 17, 13, 0.78) 0%,
+    rgba(20, 17, 13, 0.42) 45%,
+    rgba(20, 17, 13, 0.2) 100%
+  );
+  will-change: opacity;
+}
+
+/* overlay content — "Why Choose Elite Interiors", on the left side */
+.overlay {
+  position: absolute;
+  inset: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  text-align: left;
+  gap: 18px;
+  will-change: opacity;
+}
+
+.eyebrow {
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  color: var(--accent);
+}
+
+.overlayTitle {
+  color: #fff;
+  font-size: clamp(1.8rem, 4vw, 3.2rem);
+  line-height: 1.12;
+  font-weight: 700;
+  max-width: 18ch;
+}
+
+.overlayText {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 1rem;
+  line-height: 1.7;
+  max-width: 52ch;
+}
+
+.overlayBtn {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 10px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--ink);
+  background: #fff;
+  padding: 8px 8px 8px 24px;
+  border-radius: 999px;
+  transition: transform 0.25s ease, background 0.25s ease, color 0.25s ease;
+}
+
+.overlayBtn:hover {
+  transform: translateY(-2px);
+  background: var(--accent);
+  color: #fff;
+}
+
+.btnIcon {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+}
+
+.overlayBtn:hover .btnIcon {
+  background: #fff;
+  color: var(--accent);
+}
+
+/* caption — on the RIGHT side, beside the torn image (not over it) */
+.caption {
+  position: absolute;
+  z-index: 3;
+  top: 50%;
+  right: clamp(24px, 6vw, 100px);
+  transform: translateY(-50%);
+  text-align: left;
+  max-width: 24ch;
+  font-size: 0.85rem;
+  line-height: 1.65;
+  color: var(--ink-soft);
+  pointer-events: none;
+  will-change: opacity;
+}
+
+/* left vertical tab */
+.sideTab {
+  position: absolute;
+  left: 0;
+  top: clamp(120px, 22vh, 220px);
+  z-index: 6;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: #fff;
+  background: var(--ink);
+  padding: 18px 9px;
+  border-radius: 0 8px 8px 0;
+  transition: background 0.25s ease;
+}
+
+.sideTab:hover {
+  background: var(--accent);
+}
+
+.scrollCue {
+  position: absolute;
+  z-index: 3;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  color: var(--ink-soft);
+}
+
+/* ===================== RESPONSIVE ===================== */
+@media (max-width: 768px) {
+  .section {
+    height: 260vh;
+  }
+  /* caption back below the image on phones (no room on the right) */
+  .caption {
+    top: auto;
+    bottom: clamp(36px, 8vh, 70px);
+    left: 0;
+    right: 0;
+    transform: none;
+    text-align: center;
+    max-width: none;
+  }
+  .overlayText {
+    font-size: 0.92rem;
+  }
+  .sideTab {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .section {
+    height: auto;
+  }
+  .sticky {
+    height: auto;
+    padding: 100px 0 70px;
+  }
+  .fall {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+}

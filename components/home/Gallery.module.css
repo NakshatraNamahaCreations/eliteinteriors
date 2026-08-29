@@ -1,0 +1,196 @@
+/* ===================== GALLERY (full-bleed dark) ===================== */
+.gallery {
+  position: relative;
+  /* full-bleed across the viewport */
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  overflow: hidden;
+  background-color: #15120f;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: clamp(56px, 8vw, 100px) 0;
+  isolation: isolate;
+}
+
+/* darkening scrim so text + cards read over the photo */
+.scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(
+      to right,
+      rgba(16, 14, 12, 0.86) 0%,
+      rgba(16, 14, 12, 0.55) 42%,
+      rgba(16, 14, 12, 0.35) 100%
+    ),
+    linear-gradient(to top, rgba(16, 14, 12, 0.5), rgba(16, 14, 12, 0.2));
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 0.85fr 1.6fr;
+  gap: clamp(28px, 4vw, 56px);
+  align-items: center;
+}
+
+/* ---- left text column ---- */
+.copy {
+  max-width: 420px;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  padding: 8px 18px;
+  border-radius: 999px;
+}
+
+.badgeDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.title {
+  color: #fff;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: clamp(2.8rem, 6vw, 5rem);
+  line-height: 1.02;
+  letter-spacing: -1px;
+  margin: 22px 0 18px;
+}
+
+.titleLine {
+  display: block;
+}
+
+.desc {
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 0.96rem;
+  line-height: 1.65;
+  max-width: 36ch;
+}
+
+/* ---- gold arrows ---- */
+.nav {
+  display: flex;
+  gap: 16px;
+  margin-top: 34px;
+}
+
+.arrow {
+  width: 52px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: none;
+  background: var(--accent);
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 10px 24px -10px rgba(176, 141, 87, 0.7);
+  transition: background 0.25s ease, transform 0.25s ease, opacity 0.25s ease;
+}
+
+.arrow:hover:not(:disabled) {
+  background: var(--accent-deep);
+  transform: translateY(-2px);
+}
+
+.arrow:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+/* ---- right carousel ---- */
+.track {
+  display: flex;
+  gap: 22px;
+  overflow-x: auto;
+  padding: 6px 4px 10px;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.track::-webkit-scrollbar {
+  display: none;
+}
+
+.card {
+  flex: 0 0 clamp(220px, 22vw, 270px);
+  height: clamp(280px, 24vw, 300px);
+  border-radius: 22px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  scroll-snap-align: start;
+  box-shadow: 0 24px 50px -20px rgba(0, 0, 0, 0.6);
+  transition: transform 0.35s ease;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+}
+
+/* ---- circular progress ring (bottom-right) ---- */
+.ring {
+  position: absolute;
+  right: clamp(20px, 4vw, 56px);
+  bottom: clamp(20px, 4vw, 48px);
+  z-index: 2;
+  width: 56px;
+  height: 56px;
+  display: grid;
+  place-items: center;
+}
+
+.ringText {
+  position: absolute;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+/* ===================== RESPONSIVE ===================== */
+@media (max-width: 900px) {
+  .inner {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .copy {
+    max-width: none;
+  }
+  .ring {
+    display: none;
+  }
+}
+
+@media (max-width: 560px) {
+  .card {
+    flex: 0 0 78%;
+    height: 300px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .arrow {
+    transition: none;
+  }
+}

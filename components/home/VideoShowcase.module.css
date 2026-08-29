@@ -1,0 +1,290 @@
+/* ===================== WALKTHROUGH VIDEOS =====================
+   Portrait (9:16) phone clips, shown as a horizontal reel rail. */
+.section {
+  position: relative;
+  padding: clamp(64px, 8vw, 110px) 0;
+  background: var(--dark);
+  overflow: hidden;
+}
+
+/* soft brass glow, top-left */
+.section::before {
+  content: "";
+  position: absolute;
+  top: -160px;
+  left: -120px;
+  width: 480px;
+  height: 480px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(176, 141, 87, 0.18) 0%,
+    rgba(176, 141, 87, 0) 70%
+  );
+  pointer-events: none;
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---- heading row ---- */
+.head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 28px;
+  margin-bottom: clamp(28px, 3.5vw, 44px);
+}
+
+.eyebrow {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+
+.title {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: clamp(1.8rem, 3.2vw, 2.7rem);
+  line-height: 1.2;
+  color: #fff;
+  margin: 0 0 14px;
+}
+
+.gold {
+  color: var(--accent);
+}
+
+.desc {
+  font-size: 0.98rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0;
+  max-width: 52ch;
+}
+
+.nav {
+  display: flex;
+  gap: 12px;
+  flex: 0 0 auto;
+}
+
+.arrow {
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease,
+    opacity 0.25s ease;
+}
+
+.arrow:hover:not(:disabled) {
+  background: #fff;
+  color: var(--ink);
+  border-color: #fff;
+}
+
+.arrow:disabled {
+  opacity: 0.32;
+  cursor: default;
+}
+
+/* ---- the rail ---- */
+.track {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 6px;
+  scrollbar-width: none;
+}
+
+.track::-webkit-scrollbar {
+  display: none;
+}
+
+.card {
+  position: relative;
+  flex: 0 0 clamp(200px, 20vw, 250px);
+  aspect-ratio: 9 / 16;
+  padding: 0;
+  border: 0;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #000;
+  cursor: pointer;
+  scroll-snap-align: start;
+  box-shadow: 0 24px 50px -20px rgba(0, 0, 0, 0.7);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.card:hover,
+.card:focus-visible {
+  transform: translateY(-8px);
+  box-shadow: 0 30px 60px -18px rgba(0, 0, 0, 0.85);
+}
+
+.card:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.cardVideo {
+  width: 100%;
+  height: 100%;
+  /* clips differ slightly in ratio (9:16 and 3:4) — cover keeps the rail even */
+  object-fit: cover;
+  display: block;
+}
+
+.cardScrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.72) 0%,
+    rgba(0, 0, 0, 0.12) 42%,
+    rgba(0, 0, 0, 0.25) 100%
+  );
+  pointer-events: none;
+}
+
+.play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 56px;
+  height: 56px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--ink);
+  padding-left: 3px; /* optically centre the triangle */
+  transition: transform 0.3s ease, background 0.3s ease, opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.card:hover .play {
+  transform: translate(-50%, -50%) scale(1.08);
+  background: var(--accent);
+  color: #fff;
+}
+
+.cardLabel {
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  bottom: 16px;
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 500;
+  line-height: 1.4;
+  text-align: left;
+  pointer-events: none;
+}
+
+/* ---- lightbox ---- */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(10, 8, 6, 0.9);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  animation: fade 0.25s ease both;
+}
+
+.close {
+  position: absolute;
+  top: 22px;
+  right: 24px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  font-size: 1.05rem;
+  cursor: pointer;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+.close:hover {
+  background: #fff;
+  color: var(--ink);
+}
+
+.player {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  max-width: 100%;
+}
+
+.playerVideo {
+  max-height: 78vh;
+  max-width: min(440px, 92vw);
+  border-radius: 16px;
+  background: #000;
+  box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.8);
+}
+
+.playerLabel {
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 0.9rem;
+  margin: 0;
+  text-align: center;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ===================== RESPONSIVE ===================== */
+@media (max-width: 760px) {
+  .head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+  .card {
+    flex-basis: clamp(180px, 62vw, 230px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .play,
+  .arrow,
+  .lightbox {
+    transition: none;
+    animation: none;
+  }
+  .card:hover {
+    transform: none;
+  }
+  .card:hover .play {
+    transform: translate(-50%, -50%);
+  }
+}

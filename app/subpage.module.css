@@ -1,0 +1,434 @@
+/* ===================== PAGE HEADER ===================== */
+.pageHeader {
+  /* each page shifts the brass glow via these two, see the banner* classes */
+  --glow-x: 78%;
+  --glow-y: 16%;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: clamp(72px, 9vw, 124px) 0 clamp(60px, 7.5vw, 100px);
+  text-align: center;
+  color: #fff;
+  /* no photo: a warm charcoal base lit by two brass glows */
+  background: radial-gradient(
+      58% 88% at var(--glow-x) var(--glow-y),
+      rgba(176, 141, 87, 0.32) 0%,
+      rgba(176, 141, 87, 0) 62%
+    ),
+    radial-gradient(
+      70% 100% at 10% 98%,
+      rgba(176, 141, 87, 0.15) 0%,
+      rgba(176, 141, 87, 0) 60%
+    ),
+    linear-gradient(158deg, #241d16 0%, #1a1613 46%, #12100d 100%);
+}
+
+/* faint blueprint grid, masked so it fades out before the edges */
+.pageHeader::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0.055) 1px,
+      transparent 1px
+    ),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.055) 1px, transparent 1px);
+  background-size: 64px 64px;
+  -webkit-mask-image: radial-gradient(
+    78% 78% at 50% 42%,
+    #000 0%,
+    transparent 76%
+  );
+  mask-image: radial-gradient(78% 78% at 50% 42%, #000 0%, transparent 76%);
+}
+
+/* hairline brass rule along the bottom edge */
+.pageHeader::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  width: min(460px, 62%);
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--accent),
+    transparent
+  );
+}
+
+.pageHeader h1 {
+  color: #fff;
+}
+
+.pageHeader :global(.eyebrow) {
+  /* --accent lightened; --accent-soft is a 12% tint and would vanish here */
+  color: #e2c391;
+}
+
+.pageHeader .lead,
+.pageHeader :global(.lead) {
+  margin: 18px auto 0;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+/* per-page character: the glow sits somewhere different on each page, so the
+   four banners read as a set without any of them needing a photo. */
+.bannerAbout {
+  --glow-x: 78%;
+  --glow-y: 16%;
+}
+.bannerServices {
+  --glow-x: 20%;
+  --glow-y: 22%;
+}
+.bannerBlog {
+  --glow-x: 50%;
+  --glow-y: 6%;
+}
+.bannerContact {
+  --glow-x: 84%;
+  --glow-y: 78%;
+}
+
+@media (max-width: 768px) {
+  .pageHeader {
+    padding: clamp(56px, 12vw, 84px) 0 clamp(44px, 9vw, 68px);
+    background-attachment: scroll;
+  }
+}
+
+/* ===================== SHARED HEAD ===================== */
+.head {
+  max-width: 720px;
+  margin: 0 auto clamp(36px, 5vw, 56px);
+  text-align: center;
+}
+
+.head .lead {
+  margin: 16px auto 0;
+}
+
+.tinted {
+  background: var(--bg-alt);
+}
+
+/* ===================== SPLIT (about) ===================== */
+.split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+  align-items: center;
+}
+
+.splitArt {
+  height: 440px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+}
+
+.aboutArt {
+  /* gradient stays as the fallback tone while the photo loads */
+  background: linear-gradient(135deg, #d9c7a8 0%, #b08d57 60%, #6f5733 100%);
+  background-image: url("/about-studio.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.splitCopy h2 {
+  margin: 8px 0 18px;
+}
+
+.splitCopy p {
+  margin-bottom: 16px;
+}
+
+.splitCopy .btn {
+  margin-top: 12px;
+}
+
+/* ===================== VALUES ===================== */
+.valueGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.valueCard {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 30px 26px;
+  box-shadow: var(--shadow-sm);
+}
+
+.valueCard h3 {
+  margin-bottom: 10px;
+}
+
+.valueCard p {
+  font-size: 0.95rem;
+}
+
+/* ===================== STATS BAND ===================== */
+.statsBand {
+  background: #241d16;
+  padding: clamp(44px, 6vw, 72px) 0;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.statCard {
+  text-align: center;
+  padding: 0 12px;
+  border-right: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.statCard:last-child {
+  border-right: none;
+}
+
+.statValue {
+  display: block;
+  font-family: var(--font-serif);
+  font-size: clamp(2.2rem, 4vw, 3.1rem);
+  font-weight: 600;
+  line-height: 1.1;
+  color: #e2c391;
+}
+
+.statLabel {
+  display: block;
+  margin-top: 8px;
+  font-size: 0.9rem;
+  letter-spacing: 0.02em;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+/* ===================== PROCESS ===================== */
+.processGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+}
+
+.processCard {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 34px 26px 28px;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.3s ease, box-shadow 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.processCard:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--accent);
+}
+
+.processStep {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  margin-bottom: 16px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.processCard h3 {
+  margin-bottom: 10px;
+  font-size: 1.25rem;
+}
+
+.processCard p {
+  font-size: 0.94rem;
+}
+
+/* ===================== WHY US ===================== */
+.whyArt {
+  background-image: url("/about-why-art.jpg");
+  background-size: cover;
+  background-position: center;
+}
+
+.reasonList {
+  list-style: none;
+  margin: 22px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 14px;
+}
+
+.reasonList li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.tick {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  margin-top: 2px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+}
+
+/* ===================== ABOUT CTA ===================== */
+.aboutCta {
+  padding: clamp(60px, 8vw, 100px) 0;
+  background: linear-gradient(135deg, #2c231a 0%, #3d3021 100%);
+  text-align: center;
+}
+
+.aboutCtaInner h2 {
+  color: #fff;
+  max-width: 18ch;
+  margin: 0 auto 14px;
+}
+
+.aboutCtaInner p {
+  max-width: 54ch;
+  margin: 0 auto;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.aboutCtaActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 12px 22px;
+  margin-top: 26px;
+}
+
+.aboutCtaPhone {
+  color: #e2c391;
+  font-size: 0.98rem;
+}
+
+.aboutCtaPhone:hover {
+  color: #fff;
+}
+
+/* ===================== CONTACT ===================== */
+.contactGrid {
+  display: grid;
+  grid-template-columns: 0.8fr 1.2fr;
+  gap: 48px;
+  align-items: start;
+}
+
+.contactInfo h2 {
+  margin-bottom: 24px;
+}
+
+.infoList {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.infoList li {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.infoLabel {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-deep);
+}
+
+.infoList a:hover {
+  color: var(--accent-deep);
+}
+
+/* ===================== RESPONSIVE ===================== */
+@media (max-width: 1024px) {
+  .valueGrid {
+    grid-template-columns: 1fr;
+  }
+  .teamGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 860px) {
+  .split,
+  .contactGrid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .splitArt {
+    height: 300px;
+    order: -1;
+  }
+}
+
+@media (max-width: 560px) {
+  .teamGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* ===================== ABOUT PAGE RESPONSIVE ===================== */
+@media (max-width: 980px) {
+  .statsGrid,
+  .processGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .statCard:nth-child(2n) {
+    border-right: none;
+  }
+
+  .statCard:nth-child(-n + 2) {
+    padding-bottom: 26px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+  }
+}
+
+@media (max-width: 600px) {
+  .statsGrid,
+  .processGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .statCard {
+    border-right: none;
+  }
+
+  .statCard:not(:last-child) {
+    padding-bottom: 22px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+  }
+}

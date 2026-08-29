@@ -1,0 +1,214 @@
+/* ===================== SERVICES CARDS =====================
+   Replaces the old hairline-separated list with a card grid: each service gets
+   its own surface, an icon, a ghosted index number, and its points as chips. */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(20px, 2.4vw, 30px);
+}
+
+.card {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(26px, 2.6vw, 38px);
+  border-radius: 18px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  border-color: var(--accent);
+  box-shadow: var(--shadow-lg);
+}
+
+/* brass bar along the top edge, drawn in on hover */
+.card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-deep));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+}
+
+.card:hover::before {
+  transform: scaleX(1);
+}
+
+/* soft brass wash bleeding in from the top-right corner */
+.card::after {
+  content: "";
+  position: absolute;
+  top: -90px;
+  right: -90px;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(176, 141, 87, 0.14) 0%,
+    rgba(176, 141, 87, 0) 70%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.card:hover::after {
+  opacity: 1;
+}
+
+/* ---- head: icon + big ghost number ---- */
+.head {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.icon {
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  border-radius: 15px;
+  background: var(--accent-soft);
+  border: 1px solid rgba(176, 141, 87, 0.28);
+  color: var(--accent-deep);
+  transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.card:hover .icon {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.index {
+  font-family: var(--font-sans);
+  font-size: clamp(2.4rem, 4vw, 3.4rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--line);
+  transition: color 0.3s ease;
+}
+
+.card:hover .index {
+  color: rgba(176, 141, 87, 0.32);
+}
+
+/* ---- body ---- */
+.title {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-sans);
+  font-size: clamp(1.25rem, 1.7vw, 1.5rem);
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--ink);
+  margin: 0 0 12px;
+}
+
+.desc {
+  position: relative;
+  z-index: 1;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--ink-soft);
+  margin: 0 0 22px;
+}
+
+/* points as chips rather than a bulleted list */
+.points {
+  position: relative;
+  z-index: 1;
+  list-style: none;
+  margin: 0 0 24px;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.points li {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 13px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  font-size: 0.83rem;
+  color: var(--ink);
+  transition: border-color 0.3s ease, background 0.3s ease;
+}
+
+.card:hover .points li {
+  border-color: rgba(176, 141, 87, 0.35);
+  background: var(--accent-soft);
+}
+
+.tick {
+  color: var(--accent);
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+}
+
+/* ---- footer link, pinned to the bottom so cards line up ---- */
+.link {
+  position: relative;
+  z-index: 1;
+  margin-top: auto;
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--accent-deep);
+  transition: gap 0.25s ease, color 0.25s ease;
+}
+
+.link:hover {
+  gap: 13px;
+  color: var(--accent);
+}
+
+/* ===================== RESPONSIVE ===================== */
+@media (max-width: 860px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .card::before,
+  .card::after,
+  .icon,
+  .index,
+  .points li,
+  .link {
+    transition: none;
+  }
+  .card:hover {
+    transform: none;
+  }
+  .card::before {
+    transform: scaleX(1);
+  }
+}

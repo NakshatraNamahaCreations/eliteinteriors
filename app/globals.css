@@ -1,0 +1,227 @@
+:root {
+  /* Brand palette — original warm, refined interiors aesthetic */
+  --bg: #fbf9f6;
+  --bg-alt: #f3efe9;
+  --surface: #ffffff;
+  --ink: #1c1a17;
+  --ink-soft: #5a544c;
+  --line: #e6e0d7;
+
+  /* primary accent = brushed brass / gold */
+  --accent: #b08d57;
+  --accent-deep: #8a6d3f;
+  --accent-soft: rgba(176, 141, 87, 0.12);
+
+  /* gold aliases (used by stars / step badges) */
+  --gold: #b08d57;
+  --gold-deep: #8a6d3f;
+
+  /* dark sections (warm charcoal) */
+  --dark: #1c1a17;
+  --dark-2: #15120f;
+
+  --shadow-sm: 0 1px 2px rgba(28, 26, 23, 0.05);
+  --shadow-md: 0 12px 30px -12px rgba(28, 26, 23, 0.22);
+  --shadow-lg: 0 30px 60px -20px rgba(28, 26, 23, 0.28);
+
+  --maxw: 1200px;
+  --radius: 14px;
+  --radius-sm: 8px;
+
+  /* Poppins everywhere — both slots resolve to the same family */
+  --font-sans: var(--font-poppins), system-ui, "Segoe UI", Roboto, sans-serif;
+  --font-serif: var(--font-poppins), system-ui, "Segoe UI", Roboto, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  overflow-x: hidden; /* guard against 100vw full-bleed scrollbar overflow */
+  background: var(--bg);
+  color: var(--ink-soft);
+  font-family: var(--font-sans);
+  font-size: 17px;
+  line-height: 1.65;
+  letter-spacing: 0.1px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-serif);
+  color: var(--ink);
+  font-weight: 600;
+  line-height: 1.12;
+  margin: 0;
+}
+
+h1 {
+  font-size: clamp(2.6rem, 5.5vw, 4.4rem);
+  letter-spacing: -0.5px;
+}
+
+h2 {
+  font-size: clamp(2rem, 4vw, 2.9rem);
+  letter-spacing: -0.4px;
+}
+
+h3 {
+  font-size: 1.4rem;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* ---------- shared layout helpers ---------- */
+.container {
+  width: 100%;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.section {
+  padding: clamp(64px, 9vw, 120px) 0;
+}
+
+.eyebrow {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent-deep);
+  margin-bottom: 16px;
+}
+
+.lead {
+  font-size: 1.1rem;
+  max-width: 60ch;
+}
+
+/* ---------- buttons ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 14px 28px;
+  border-radius: 999px;
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  transition: transform 0.25s ease, background 0.25s ease, color 0.25s ease,
+    border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: var(--shadow-md);
+}
+
+.btn-primary:hover {
+  background: var(--accent-deep);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--line);
+}
+
+.btn-ghost:hover {
+  border-color: var(--accent);
+  color: var(--accent-deep);
+}
+
+/* ---------- reveal-on-scroll ---------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    scroll-behavior: auto !important;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ---------- global mobile optimizations ---------- */
+@media (max-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+  .container {
+    padding: 0 20px;
+  }
+  .section {
+    padding: clamp(48px, 9vw, 72px) 0;
+  }
+  .lead {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  html {
+    font-size: 15px;
+  }
+  .container {
+    padding: 0 16px;
+  }
+}
+
+/* never allow horizontal overflow on small screens */
+@media (max-width: 768px) {
+  html,
+  body {
+    overflow-x: hidden;
+    max-width: 100%;
+  }
+}

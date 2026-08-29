@@ -1,0 +1,212 @@
+/* ===================== PRE-FOOTER CTA BAND ===================== */
+.ctaBand {
+  position: relative;
+  overflow: hidden;
+  background: radial-gradient(
+      700px 300px at 90% 120%,
+      rgba(176, 141, 87, 0.1),
+      transparent 60%
+    ),
+    var(--bg);
+  border-top: 1px solid var(--line);
+  padding: clamp(48px, 7vw, 84px) 0;
+}
+
+/* faint diagonal accent line */
+.ctaBand::after {
+  content: "";
+  position: absolute;
+  right: -10%;
+  bottom: -40%;
+  width: 60%;
+  height: 180%;
+  border-left: 1px solid rgba(28, 26, 23, 0.06);
+  transform: rotate(20deg);
+  pointer-events: none;
+}
+
+.ctaInner {
+  position: relative;
+  display: grid;
+  grid-template-columns: 0.8fr 1.6fr;
+  gap: clamp(28px, 5vw, 64px);
+  align-items: center;
+}
+
+.ctaDesc {
+  font-size: 0.86rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  max-width: 24ch;
+}
+
+.ctaMain {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 26px;
+}
+
+.ctaTitle {
+  color: var(--ink);
+  font-size: clamp(2rem, 4.4vw, 3.4rem);
+  line-height: 1.08;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+}
+
+.ctaTitleLine {
+  display: block;
+}
+
+.ctaBtn {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #fff;
+  background: var(--ink);
+  padding: 15px 36px;
+  border-radius: 999px;
+  transition: transform 0.25s ease, background 0.25s ease, color 0.25s ease;
+}
+
+.ctaBtn:hover {
+  transform: translateY(-2px);
+  background: var(--accent);
+  color: #fff;
+}
+
+/* ===================== FOOTER ===================== */
+.footer {
+  background: var(--ink);
+  color: #cfc7ba;
+  padding: clamp(56px, 7vw, 80px) 0 32px;
+}
+
+.top {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr 1.2fr;
+  gap: 40px;
+  padding-bottom: 44px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+/* logo: brighten on the dark footer so the dark text reads well */
+.logo {
+  height: 56px;
+  width: auto;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+  opacity: 0.92;
+}
+
+.blurb {
+  max-width: 34ch;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #a59c8e;
+  margin-bottom: 22px;
+}
+
+/* social icon buttons */
+.social {
+  display: flex;
+  gap: 12px;
+}
+
+.socialBtn {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: #cfc7ba;
+  transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.socialBtn:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.col a,
+.col span {
+  font-size: 0.95rem;
+  color: #b8afa1;
+  transition: color 0.2s ease;
+}
+
+.col a:hover {
+  color: var(--accent);
+}
+
+.colTitle {
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #fff;
+  margin-bottom: 6px;
+}
+
+.bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 28px;
+  font-size: 0.9rem;
+  color: #8c8475;
+}
+
+.legal {
+  display: flex;
+  gap: 24px;
+}
+
+.legal a {
+  color: #b8afa1;
+  transition: color 0.2s ease;
+}
+
+.legal a:hover {
+  color: var(--accent);
+}
+
+/* ===================== RESPONSIVE ===================== */
+@media (max-width: 860px) {
+  .ctaInner {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .top {
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+}
+
+@media (max-width: 520px) {
+  .top {
+    grid-template-columns: 1fr;
+  }
+  .bottom {
+    flex-direction: column;
+    gap: 14px;
+    text-align: center;
+  }
+}
