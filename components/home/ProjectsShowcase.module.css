@@ -275,6 +275,10 @@
     flex-direction: column;
     gap: 24px;
   }
+  /* stop constraining the copy to a desktop-side column */
+  .copy {
+    max-width: 100%;
+  }
   .card {
     position: relative;
     left: auto;
@@ -292,5 +296,35 @@
   .dots,
   .scrollHint {
     display: none;
+  }
+}
+
+@media (max-width: 560px) {
+  .sticky {
+    padding: 48px 0;
+  }
+  .title {
+    font-size: clamp(1.8rem, 8vw, 2.4rem);
+    margin: 14px 0 22px;
+  }
+  .eyebrow {
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+  }
+  .actions {
+    gap: 10px;
+  }
+  .btnPrimary,
+  .btnGhost {
+    padding: 11px 20px;
+    font-size: 0.88rem;
+    white-space: nowrap;
+  }
+  .rightImage {
+    height: 220px;
+    margin-top: 20px;
+  }
+  .cardImgWrap {
+    height: 180px;
   }
 }

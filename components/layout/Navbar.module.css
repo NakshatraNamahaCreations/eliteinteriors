@@ -177,6 +177,7 @@
 @media (max-width: 860px) {
   .burger {
     display: flex;
+    justify-self: end;
   }
 
   .nav {

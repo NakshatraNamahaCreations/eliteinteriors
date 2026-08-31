@@ -125,8 +125,16 @@ export default function Footer() {
           <div className={styles.bottom}>
             <p>© {year} Elite Interiors. All rights reserved.</p>
             <div className={styles.legal}>
-              <Link href="/privacy">Privacy Policy</Link>
-              <Link href="/terms">Terms of Service</Link>
+              <span>
+                Developed by{" "}
+                <a
+                  href="https://www.nakshatranamahacreations.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Nakshatra Namaha Creations
+                </a>
+              </span>
             </div>
           </div>
         </div>

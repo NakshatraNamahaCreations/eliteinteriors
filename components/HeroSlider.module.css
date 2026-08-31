@@ -135,14 +135,14 @@
   width: clamp(290px, 25vw, 350px);
 }
 
-/* big headline — sits in the lower-middle area (FNJI), the "N" aligns under the
-   logo / over the dark column. Left inset ≈ logo's left position. */
+/* big headline — sits in the lower-middle area, clears the dark sidebar column. */
 .copy {
   flex: 1;
   min-width: 0;
   display: flex;
   align-items: flex-end; /* sit toward the lower part of the banner (FNJI) */
-  padding-left: clamp(28px, 3.5vw, 56px);
+  /* clear the sidebar (clamp(150px, 14vw, 210px)) + breathing room */
+  padding-left: clamp(180px, 17vw, 250px);
   padding-bottom: clamp(20px, 5vh, 56px); /* lift it a little off the divider */
   animation: rise 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
@@ -151,11 +151,12 @@
   color: #fff;
   font-family: var(--font-sans); /* FNJI uses a clean sans for the headline */
   font-weight: 400;
-  font-size: clamp(2.5rem, 6vw, 5rem);
-  line-height: 1.08;
+  font-size: clamp(2.2rem, 4.6vw, 3.8rem);
+  line-height: 1.1;
   letter-spacing: -0.5px;
   text-shadow: 0 2px 30px rgba(0, 0, 0, 0.35);
-  max-width: 16ch; /* narrower than before: the card now shares the row */
+  max-width: 22ch;
+  text-wrap: balance; /* let the browser split the two long lines evenly */
 }
 
 /* second line indented to the right + slightly lighter (matches reference) */

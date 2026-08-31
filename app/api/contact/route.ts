@@ -1,9 +1,32 @@
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 
-/* Mail sending needs the Node runtime, not the edge runtime. */
+/* Mail sending needs the Node runtime, not the edge runtime.
+   No `dynamic = "force-dynamic"` — it's incompatible with `output: "export"`
+   used by the Hostinger build, and the POST body + env access already make
+   this route dynamic on Vercel. */
 export const runtime = "nodejs";
-export const dynamic = "force-dynamic";
+
+/* CORS: static site (Hostinger) posts here from a different origin.
+   CORS_ALLOW_ORIGIN should be set on Vercel to the Hostinger origin
+   (e.g. https://eliteinteriors.in). Falls back to "*" during setup. */
+const CORS_HEADERS = {
+  "Access-Control-Allow-Origin": process.env.CORS_ALLOW_ORIGIN || "*",
+  "Access-Control-Allow-Methods": "POST, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type",
+  "Access-Control-Max-Age": "86400",
+};
+
+function json(body: unknown, init?: ResponseInit) {
+  return json(body, {
+    ...init,
+    headers: { ...CORS_HEADERS, ...(init?.headers || {}) },
+  });
+}
+
+export async function OPTIONS() {
+  return new NextResponse(null, { status: 204, headers: CORS_HEADERS });
+}
 
 /** Fields every form on the site may send. All optional except name + phone. */
 type Enquiry = {
@@ -51,12 +74,12 @@ export async function POST(request: Request) {
   try {
     body = await request.json();
   } catch {
-    return NextResponse.json({ error: "Invalid request." }, { status: 400 });
+    return json({ error: "Invalid request." }, { status: 400 });
   }
 
   // Honeypot: pretend it worked so bots don't retry.
   if (clean(body.company)) {
-    return NextResponse.json({ ok: true });
+    return json({ ok: true });
   }
 
   const data: Record<string, string> = {
@@ -72,13 +95,13 @@ export async function POST(request: Request) {
 
   // Forms differ on which of phone/email they mark required, so accept either.
   if (!data.name || (!data.phone && !data.email)) {
-    return NextResponse.json(
+    return json(
       { error: "Please provide your name and a phone number or email." },
       { status: 400 }
     );
   }
   if (data.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
-    return NextResponse.json(
+    return json(
       { error: "Please provide a valid email address." },
       { status: 400 }
     );
@@ -134,9 +157,9 @@ export async function POST(request: Request) {
   }
 
   if (!SMTP_USER || !SMTP_PASS) {
-    if (await sendViaFormSubmit()) return NextResponse.json({ ok: true });
+    if (await sendViaFormSubmit()) return json({ ok: true });
     console.error("[contact] No working mail delivery is configured.");
-    return NextResponse.json(
+    return json(
       { error: "Mail is not configured on the server." },
       { status: 500 }
     );
@@ -185,12 +208,12 @@ export async function POST(request: Request) {
     console.log("[contact] sent:", info.messageId, nodemailer.getTestMessageUrl(info) || "");
   } catch (error) {
     console.error("[contact] SMTP send failed, trying fallback:", error);
-    if (await sendViaFormSubmit()) return NextResponse.json({ ok: true });
-    return NextResponse.json(
+    if (await sendViaFormSubmit()) return json({ ok: true });
+    return json(
       { error: "Could not send your message. Please call us instead." },
       { status: 502 }
     );
   }
 
-  return NextResponse.json({ ok: true });
+  return json({ ok: true });
 }

@@ -1,13 +1,21 @@
 import type { NextConfig } from "next";
 import path from "node:path";
 
+/* Dual-target build:
+   - Vercel (VERCEL=1 auto-set):   normal Node build, /api/contact live.
+   - Anywhere else (local):        static export to `out/` for Hostinger.
+     Static build POSTs to NEXT_PUBLIC_API_BASE for the API.               */
+const isVercel = !!process.env.VERCEL;
+
 const nextConfig: NextConfig = {
   reactStrictMode: true,
-  // NOTE: this used to be a static export (`output: "export"`). It now runs on
-  // the Node runtime so the /api/contact route can send mail — deploy to Vercel
-  // (or `next build && next start`), not to plain static hosting.
-  // Pin the workspace root so Next doesn't pick up unrelated lockfiles
-  // elsewhere on the machine.
+  ...(isVercel
+    ? {}
+    : {
+        output: "export",
+        images: { unoptimized: true },
+        trailingSlash: true,
+      }),
   turbopack: {
     root: path.join(__dirname),
   },

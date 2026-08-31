@@ -18,10 +18,14 @@ export type EnquiryPayload = {
  * Posts an enquiry to the mail API route.
  * Throws an Error carrying a user-facing message when it fails.
  */
+// Baked in at build time. Empty string = same-origin (Vercel/Node deploy);
+// full URL like https://xxx.vercel.app = static build hitting the Vercel API.
+const API_BASE = process.env.NEXT_PUBLIC_API_BASE ?? "";
+
 export async function submitEnquiry(payload: EnquiryPayload) {
   let response: Response;
   try {
-    response = await fetch("/api/contact", {
+    response = await fetch(`${API_BASE}/api/contact`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
