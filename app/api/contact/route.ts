@@ -18,7 +18,7 @@ const CORS_HEADERS = {
 };
 
 function json(body: unknown, init?: ResponseInit) {
-  return json(body, {
+  return NextResponse.json(body, {
     ...init,
     headers: { ...CORS_HEADERS, ...(init?.headers || {}) },
   });
